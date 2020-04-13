@@ -12,6 +12,7 @@
 			height: 400px;
 		}
 	</style>
+	<script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
 	<canvas id="screen" width="10" height="10"></canvas>
@@ -28,11 +29,21 @@
 		const screen = document.getElementById('screen')
 		renderScreen(screen, game, requestAnimationFrame)
 
-		game.addPlayer({playerId: "player1", playerX: 1, playerY: 1})
-		game.addPlayer({playerId: "Jean", playerX: 2, playerY: 8})
-		game.addPlayer({playerId: "joao", playerX: 9, playerY: 6})
-		game.addFruit({fruitId: "fruit1", fruitX: 3, fruitY: 5})
-		game.addFruit({fruitId: "fruit2", fruitX: 4, fruitY: 2})
+		const socket = io()
+
+		socket.on('connect', () => {
+			const playerId = socket.id
+			console.log(`> Player connected on client whith id: ${playerId}`)
+		})
+		socket.on('setup', (state) => {
+			console.log(state)
+			game.state = state;
+		})
+	//	game.addPlayer({playerId: "player1", playerX: 1, playerY: 1})
+	//	game.addPlayer({playerId: "Jean", playerX: 2, playerY: 8})
+	//	game.addPlayer({playerId: "joao", playerX: 9, playerY: 6})
+	//	game.addFruit({fruitId: "fruit1", fruitX: 3, fruitY: 5})
+	//	game.addFruit({fruitId: "fruit2", fruitX: 4, fruitY: 2})
     
 	</script>
 </body>
